@@ -11,5 +11,5 @@
       "destination": "/index.html"
     }
   ],
-  "outputDirectory": "dist"  // Change this based on your framework
+  "outputDirectory": "public"
 }
