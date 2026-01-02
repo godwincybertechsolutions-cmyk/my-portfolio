@@ -4,26 +4,32 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    
     return {
+      // IMPORTANT: Set base to empty or '/' for Vercel
+      base: '',
+      
       server: {
         port: 3000,
         host: '0.0.0.0',
       },
       build: {
+        outDir: 'dist',
         rollupOptions: {
           output: {
             manualChunks: {
               'vendor': ['react', 'react-dom', 'react-router-dom'],
               'animations': ['framer-motion'],
             },
+            // Proper asset naming
+            assetFileNames: 'assets/[name]-[hash][extname]',
+            chunkFileNames: 'assets/[name]-[hash].js',
+            entryFileNames: 'assets/[name]-[hash].js',
           },
         },
-        // Minification with esbuild (default, faster and simpler)
         minify: 'esbuild',
-        // Target modern browsers for smaller bundle
         target: 'esnext',
         cssCodeSplit: true,
-        // Enable source maps for production debugging if needed
         sourcemap: false,
       },
       plugins: [react()],
